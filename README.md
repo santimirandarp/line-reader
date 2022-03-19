@@ -18,7 +18,7 @@ npm i @santimir/line-reader
 * Splitting and reading a string
 
 ```javascript
-import { LineReader } from "line-reader";
+import { LineReader } from "@santimir/line-reader";
 
 const myString = "hello\n world\n new string\n here";
 let lines = new LineReader(myString); //does not touch original string
@@ -36,6 +36,7 @@ const getArrayBackIfNeeded = lines.data;
 
 ```javascript
 import { readFileSync as rfs } from "fs";
+import { LineReader } from "@santimir/line-reader";
 
 const myFile = rfs("./path/to/file")
 let lines = new LineReader(myFile)
@@ -44,7 +45,7 @@ lines.skip(10) //skip first 10 lines
 
 while (this.lines.length > this.lines.index) {
   const thisLine = lines.readLine()
-  if (thisLine.substring(/^BODY/)) break
+  if (thisLine.substring(/^body/i)) break
 }
 
 const bodyFirstLine = lines.readLine();
