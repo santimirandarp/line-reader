@@ -8,6 +8,7 @@ Reads lines from a file or a string.
 * provides some helper methods.
 
 ## Installation
+
 ```
 npm i linereader
 ```
@@ -15,10 +16,12 @@ npm i linereader
 ## Examples
 
 * Splitting and reading a string
+
 ```javascript
+
 import {LineReader} from "line-reader";
 const myString = "hello\n world\n new string\n here";
-let lines = new LineReader(myString);//does not touch original string
+let lines = new LineReader(myString); //does not touch original string
 
 const firstLine = lines.readLine(); // hello
 const secondLine = lines.readLine(); // world
@@ -30,6 +33,7 @@ const getArrayBackIfNeeded = lines.data;
 ```
 
 * A file
+
 ```javascript
 import {readFileSync as rfs} from "fs";
 const myFile =  rfs("./path/to/file")
@@ -45,7 +49,7 @@ while(this.lines.length > this.lines.index){
 const bodyFirstLine = lines.readLine();
 ```
 
-## [API Documentation](https://
+## [API Documentation](https://santimirandarp.github.io/line-reader/)
 
 ## License
 
