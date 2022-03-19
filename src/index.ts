@@ -9,19 +9,16 @@ export type TextData = ArrayBuffer|Buffer|string;
 
 /** Options for the LineReader class */
 export interface LineReaderOpts {
- /** end of line, @default /\r?\n/ */
+ /** end of line. default /\r?\n/ */
   eol?: RegExp | string;
- /** buffer index, @default 0 */
+ /** buffer index. default 0 */
   index?: number;
   /** specify encoding when it is not utf8 */
   encoding?:string;
 }
 /** Splits strings at specified eol. 
  * @param data - The file as a string,  ArrayBuffer, etc.
- * @param [options] - As an object. @default `{eol:'\n', offset:0}`
- * @param [options.eol] - End of line as string. @default `'\n'`
- * @param [options.index] - Array's index where to start reading. @default `0`
- * @param [options.encoding] - text encoding
+ * @param options - As an object. @default 
  */
 export class LineReader {
   /** Array of lines splitted at `options.eol` */
