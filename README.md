@@ -60,5 +60,5 @@ const bodyFirstLine = lines.readLine();
 [npm-url]: https://www.npmjs.com/package/@santimir/line-reader
 [download-image]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
 [download-url]: https://www.npmjs.com/package/@santimir/line-reader
-[licence]: https://www.npmjs.com/package/@santimir/line-reader/LICENSE
+[license]: https://github.com/santimirandarp/line-reader/LICENSE
 [docs]: https://santimirandarp.github.io/line-reader/
