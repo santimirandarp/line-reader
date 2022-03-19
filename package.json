@@ -1,7 +1,7 @@
 {
   "name": "@santimir/line-reader",
   "author": "Santiago Miranda",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "aims to have similar functionality to python readlines",
   "keywords": [ "readlines", "linereader", "line-reader", "read by line" ],
   "license": "MIT",
@@ -29,7 +29,8 @@
     "test-only": "jest --coverage",
     "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
     "tsc-cjs": "tsc --project tsconfig.cjs.json",
-    "tsc-esm": "tsc --project tsconfig.esm.json"
+    "tsc-esm": "tsc --project tsconfig.esm.json",
+    "docs": "typedoc src/index.js"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",

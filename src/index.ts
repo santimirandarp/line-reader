@@ -1,5 +1,10 @@
 import { ensureString } from "ensure-string";
+/** @module
+ */
 
+/** data input values for the LineReader. 
+ * You get ArrayBuffer from `fs.readFileSync` for example. 
+ */
 export type TextData = ArrayBuffer|Buffer|string;
 
 export interface LineReaderOpts {

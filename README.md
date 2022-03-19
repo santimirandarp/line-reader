@@ -4,9 +4,8 @@
 
 Reads lines from a file or a string.
 
-`myString.split(pattern)` may be annoying at some use cases, like tracking the index.
-
-This class keeps track of the current index (sometimes called offset), and provides some helper methods.
+* Class keeps track of the current index, 
+* provides some helper methods.
 
 ## Installation
 ```
@@ -46,6 +45,7 @@ while(this.lines.length > this.lines.index){
 const bodyFirstLine = lines.readLine();
 ```
 
+## [API Documentation](https://
 
 ## License
 
