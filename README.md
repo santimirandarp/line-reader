@@ -10,7 +10,7 @@ Reads lines from a file or a string.
 ## Installation
 
 ```
-npm i linereader
+npm i @santimir/line-reader
 ```
 
 ## Examples
@@ -49,13 +49,14 @@ while(this.lines.length > this.lines.index){
 const bodyFirstLine = lines.readLine();
 ```
 
-## [API Documentation](https://santimirandarp.github.io/line-reader/)
+## [API Documentation][docs]
 
 ## License
-
-This software is licensed under MIT.
+[This software is licensed under MIT][license]
 
 [npm-image]: https://img.shields.io/npm/v/@santimir/line-reader.svg
 [npm-url]: https://www.npmjs.com/package/@santimir/line-reader
 [download-image]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
 [download-url]: https://www.npmjs.com/package/@santimir/line-reader
+[licence]: https://www.npmjs.com/package/@santimir/line-reader/LICENSE
+[docs]: https://santimirandarp.github.io/line-reader/

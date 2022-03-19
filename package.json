@@ -1,11 +1,10 @@
 {
   "name": "@santimir/line-reader",
   "author": "Santiago Miranda",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "aims to have similar functionality to python readlines",
   "keywords": [ "readlines", "linereader", "line-reader", "read by line" ],
   "license": "MIT",
-  "homepage": "https://github.com/santimirandarp/line-reader#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/santimirandarp/line-reader.git"
