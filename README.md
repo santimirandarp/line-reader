@@ -18,8 +18,8 @@ npm i @santimir/line-reader
 * Splitting and reading a string
 
 ```javascript
+import { LineReader } from "line-reader";
 
-import {LineReader} from "line-reader";
 const myString = "hello\n world\n new string\n here";
 let lines = new LineReader(myString); //does not touch original string
 
@@ -35,15 +35,16 @@ const getArrayBackIfNeeded = lines.data;
 * A file
 
 ```javascript
-import {readFileSync as rfs} from "fs";
-const myFile =  rfs("./path/to/file")
+import { readFileSync as rfs } from "fs";
+
+const myFile = rfs("./path/to/file")
 let lines = new LineReader(myFile)
-lines.skip(10)//skip first 10 lines
+lines.skip(10) //skip first 10 lines
 
 
-while(this.lines.length > this.lines.index){
+while (this.lines.length > this.lines.index) {
   const thisLine = lines.readLine()
-  if(thisLine.substring(/^BODY/)) break
+  if (thisLine.substring(/^BODY/)) break
 }
 
 const bodyFirstLine = lines.readLine();
