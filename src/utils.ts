@@ -2,7 +2,7 @@ import { ensureString } from "ensure-string";
 
 export type TextData = ArrayBuffer|Buffer|string;
 
-export interface LinedOpts {
+export interface LineReaderOpts {
  /** end of line, @default /\r?\n/ */
   eol?: RegExp | string;
  /** buffer index, @default 0 */
@@ -17,7 +17,7 @@ export interface LinedOpts {
  * @param [options.index] - Array's index where to start reading. @default `0`
  * @param [options.encoding] - text encoding
  */
-export class Lined {
+export class LineReader {
   /** Array of lines splitted at `options.eol` */
   public lines: string[];
   /** Number of lines */
@@ -27,7 +27,7 @@ export class Lined {
   /** end of line as in `options.eol` */
   public eol: RegExp|string;
 
-  public constructor(data: TextData, options: LinedOpts = {}) {
+  public constructor(data: TextData, options: LineReaderOpts = {}) {
     /* defaults */
     const { eol = /\r?\n/, index = 0, encoding } = options;
     this.eol = eol;
