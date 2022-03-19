@@ -7,6 +7,7 @@ import { ensureString } from "ensure-string";
  */
 export type TextData = ArrayBuffer|Buffer|string;
 
+/** Options for the LineReader class */
 export interface LineReaderOpts {
  /** end of line, @default /\r?\n/ */
   eol?: RegExp | string;
