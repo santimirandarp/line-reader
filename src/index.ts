@@ -1,80 +1,144 @@
-import { ensureString } from "ensure-string";
-/** @module
- */
 
 /** data input values for the LineReader. 
  * You get ArrayBuffer from `fs.readFileSync` for example. 
  */
 export type TextData = ArrayBuffer|Buffer|string;
 
-/** Options for the LineReader class */
-export interface LineReaderOpts {
- /** end of line. default /\r?\n/ */
+/** Options for `[[LineReader]]` */
+export interface LineReaderOpts{
+  /** end of line. default `/\r?\n/` */
   eol?: RegExp | string;
- /** buffer index. default 0 */
+  /** Current index in array. Initial value is `0`. */
   index?: number;
-  /** specify encoding when it is not utf8 */
+  /** Encoding used by the data. default `utf-8` */
   encoding?:string;
 }
-/** Splits strings at specified eol. 
+
+/** Tool for reading lines off a file or string
  * @param data - The file as a string,  ArrayBuffer, etc.
- * @param options - As an object. @default 
+ * @param options - Default `{eol:'\n', index:0 }`
  */
-export class LineReader {
-  /** Array of lines splitted at `options.eol` */
-  public lines: string[];
-  /** Number of lines */
+export class LineReader{
+  /** lines splitted at `options.eol` */
+  private _lines: string[];
+  /** stores specific index to easily go back */
+  private _record: number;
+  /** array length, number of lines */
   public length: number;
-  /** where to start reading lines. See `options.index`. */
+  /** Current index in array. @see [[@link `options.index`]]. */
   public index: number;
   /** end of line as in `options.eol` */
-  public eol: RegExp|string;
+  public eol?: RegExp|string;
 
-  public constructor(data: TextData, options: LineReaderOpts = {}) {
-    /* defaults */
-    const { eol = /\r?\n/, index = 0, encoding } = options;
-    this.eol = eol;
+  public constructor(data: TextData|string[], options: LineReaderOpts = {}) {
+    /*defaults in case user doesn't pass any*/
+    const { eol, index = 0, encoding } = options;
+
+    if(!Array.isArray(data)){
+      this.eol = eol || /\r?\n/;
+      if(encoding) {
+        this._lines = ensureString(data, {encoding:encoding}).split(this.eol);
+      } else{
+        this._lines = ensureString(data).split(this.eol);
+      } } else { this._lines=data }
+
     this.index = index;
-    if(encoding) {
-      this.lines = ensureString(data, {encoding:encoding}).split(this.eol);
-    } else{
-      this.lines = ensureString(data).split(this.eol); 
-    }
-    this.length = this.lines.length;
+    this._record = 0; 
+    this.length = this._lines.length;
   }
 
   /**
-   * returns line at index and updates index +1 
+   * @returns splitted string as an array
    */
-  public readLine(): string {
-    if (this.index >= this.length) {
-      /* check index isn't off the possible indexs */
-      throw new Error(
-        `Last index is ${this.length - 1}. Current index ${this.index}.`,
-      );
-    }
-    return this.lines[this.index++];
+  public getData():string[]{
+    return this._lines
   }
 
   /**
-   * returns current line + n-1 lines, updates index (+n)
-   * `['line1','line2','line3']` at index 0, 
-   * readLines(2) reads line1 & line2
-   * @returns string array or (if n=0) a string. Internally it also **updates index**
+   * reads line **at** index and updates index +1
+   * @returns the line at index.
    */
-  public readLines(n: number): string[] | string {
-    if(!Number.isInteger(n)){throw new Error(`expected argument n as an integer. 
-      received: none|string|float.`)}
-    const slots = this.lines.length - this.index - 1;
-    if(n>slots){ throw new RangeError(`n ${n} is outside the array's scope ${slots}`) }
-    if(n===0) return this.readLine();
+  public readLine():string{
+    return this._lines[this.index++];
+  }
+
+  /**
+   * returns current line + n-1 lines.
+   * @param n - number of lines to read
+   * @returns selectedLines - subset of lines
+   * **Updates index**.
+   */
+  public readLines(n: number=1): string[] {
+    if(!Number.isInteger(n) && n > 0){
+      throw new TypeError("argument must be integer and > 0")
+    }
+
+    if(n===1) return [this.readLine()];
+
+    const total = this.length 
+      const read = this.index;
+    const left = total - read; 
+    if( n > left){ throw new RangeError(`n ${n} is outside the array's boundary ${left}`) }
+
     /* returns n lines from index to index+n-1 */
-    const selectedLines = this.lines.slice(this.index, this.index + n);
-    this.index += n;
+    const selectedLines = this._lines.slice(this.index, this.index+=n);
     return selectedLines;
   }
-  public skip(n:number):void{
-    this.index+=n
+
+  /** 
+   * Reads lines to desired index **exclusive**
+   * @param to - end index exclusive,
+   * @return array from current position **to** indicated.
+   */
+  public readTo(to:number=this.length):string[]{
+    return this._lines.slice(this.index, this.index+=to);
+  }
+
+  /** 
+   * Skips n lines
+   * @param n -  number of lines to skip.
+   * If `n=1` skips current line
+   * example `lines.skip(2)` will skip reading the current line and the next one.
+   * @returns this
+   */
+  public skip(n:number=1):this {
+    this.index += n;
+    return this
+  }
+
+  /** 
+   * moves to specific index in the array
+   * @returns this
+   */
+  public seek(newIndex:number=this.index): this{
+    this.index = newIndex;
+    return this;
+  }
+
+  /** 
+   * records index so we can come back later
+   * @returns this
+   */
+  public record(): this{
+    this._record = this.index;
+    return this;
+  }
+
+  /** 
+   * moves to recorded index
+   * @returns this
+   */
+  public rewind(): this{
+    this.index = this._record;
+    return this;
+  }
+
+  /** 
+   * Moves back to the beginning, `index=0`
+   * @returns this
+   */
+  public reset(): this{
+    this.index = 0;
+    return this;
   }
 }
-
