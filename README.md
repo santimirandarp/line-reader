@@ -2,10 +2,16 @@
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
 
-Reads lines from a file or a string.
+Splits and Reads lines from a string or string array. 
+
+If the argument is an array, it does not further split, just enables the functionality for reading lines.
 
 * Class keeps track of the current index, 
-* provides some helper methods.
+* Performs string splitting using Regex or string characters
+* A few of the helper methods: 
+  * `readLine`, `readLines`, `readTo`, 
+  * `getLines`, 
+  * `skip`, `record`, `rewind`, `reset`
 
 ## Installation
 
@@ -21,8 +27,7 @@ import { LineReader } from "@santimir/line-reader";
 const myString = "hello\n world\n new string\n here";
 let lines = new LineReader(myString);
 
-const firstLine = lines.readLine(); // hello
-const secondLine = lines.readLine(); // world
+const example = lines.readLine() + lines.skip().readLine(); // "hello new string"
 ```
 
 Or more complex..
@@ -31,13 +36,24 @@ Or more complex..
 import { readFileSync as rfs } from "fs";
 import { LineReader } from "@santimir/line-reader";
 
-const myFile = rfs("./path/to/file")
-let lines = new LineReader(myFile)
-lines.skip(10) //skip first 10 lines
+const myStuff = rfs("./path/to/file").toString("utf8");
 
-while (this.lines.length > this.lines.index) {
-  const thisLine = lines.readLine()
-  if (thisLine.substring(/^body/i)) break
+const defaultOpts = { eol:/\r?\n/, index:0 };
+let lines = new LineReader(myStuff, defaultOpts );
+
+//useless but to show functionality
+lines.skip(10)//skip first 10 lines, index now 11
+     .record()//stores this index
+     .seek(3)//moves to index 3
+     .rewind()//back to index 11
+     .reset()//index 0
+     .readLine()//returns first line
+
+let switch = true;
+while(switch){
+  if(lines.readLine().startsWith("<body>")){
+    switch=false
+  }
 }
 
 const bodyFirstLine = lines.readLine();

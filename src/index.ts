@@ -1,56 +1,52 @@
-
-/** data input values for the LineReader. 
- * You get ArrayBuffer from `fs.readFileSync` for example. 
- */
-export type TextData = ArrayBuffer|Buffer|string;
-
 /** Options for `[[LineReader]]` */
 export interface LineReaderOpts{
-  /** end of line. default `/\r?\n/` */
-  eol?: RegExp | string;
-  /** Current index in array. Initial value is `0`. */
+  /** end of line. default `eol: /\r?\n/` */
+  eol?: RegExp | string | null;
+  /** current reader index. Initial value `index: 0`. */
   index?: number;
-  /** Encoding used by the data. default `utf-8` */
-  encoding?:string;
 }
 
 /** Tool for reading lines off a file or string
- * @param data - The file as a string,  ArrayBuffer, etc.
- * @param options - Default `{eol:'\n', index:0 }`
+ * It creates the lines by a specified splitting pattern or string
+ * See [[`LineReaderOpts`]].
+ * @param data - The file as a string,  Buffer, ArrayBuffer, etc.
+ * It accepts a string array also, in which case it doesn't do any splitting,
+ * but it has all the functionality.
+ * @param options - Default `{ eol:'\n', index:0 }`
  */
 export class LineReader{
-  /** lines splitted at `options.eol` */
-  private _lines: string[];
-  /** stores specific index to easily go back */
-  private _record: number;
+  /** end of line as in `options.eol` */
+  public eol: RegExp | string | null;
   /** array length, number of lines */
   public length: number;
   /** Current index in array. @see [[@link `options.index`]]. */
   public index: number;
-  /** end of line as in `options.eol` */
-  public eol?: RegExp|string;
+  /** stores specific index to easily go back */
+  private _record: number;
+  /** lines splitted at `options.eol` */
+  private _lines: string[];
 
-  public constructor(data: TextData|string[], options: LineReaderOpts = {}) {
+  public constructor(data: string|string[], options: LineReaderOpts = {}) {
     /*defaults in case user doesn't pass any*/
-    const { eol, index = 0, encoding } = options;
+    const { eol =/\r?\n/, index = 0 } = options;
 
-    if(!Array.isArray(data)){
-      this.eol = eol || /\r?\n/;
-      if(encoding) {
-        this._lines = ensureString(data, {encoding:encoding}).split(this.eol);
-      } else{
-        this._lines = ensureString(data).split(this.eol);
-      } } else { this._lines=data }
+    const isArray = Array.isArray(data);
 
+    if(!isArray && typeof(data)!=='string'){
+      throw new TypeError("Data must be string or array of strings")
+    }
+
+    this.eol = isArray ? null: eol;
     this.index = index;
     this._record = 0; 
+    this._lines = isArray ? data : data.split(this.eol as string|RegExp);
     this.length = this._lines.length;
-  }
-
+  
+}
   /**
    * @returns splitted string as an array
    */
-  public getData():string[]{
+  public getLines():string[]{
     return this._lines
   }
 
@@ -62,8 +58,15 @@ export class LineReader{
     return this._lines[this.index++];
   }
 
-  /**
-   * returns current line + n-1 lines.
+  /** Reads `n` lines.
+   * Example
+   * ```
+   * const letters = new LineReader("abcde", {eol:""})
+   * const nol = Math.floor(letters.length/2) // half -1, or half (even length)
+   * const [firstHalf, secondHalf] = [letters.readLines(nol), letters.skip().readLines(nol)]
+   * console.log(letters.index);//5 
+   * const outbound = letters.readLine() //error, there is no index 5 in letters.
+   * ```
    * @param n - number of lines to read
    * @returns selectedLines - subset of lines
    * **Updates index**.
@@ -76,9 +79,10 @@ export class LineReader{
     if(n===1) return [this.readLine()];
 
     const total = this.length 
-      const read = this.index;
-    const left = total - read; 
-    if( n > left){ throw new RangeError(`n ${n} is outside the array's boundary ${left}`) }
+    const read =  this.index
+    const left = total-read
+
+    if(n > left){ throw new RangeError(`n ${n} is outside the array's boundary ${left}`) }
 
     /* returns n lines from index to index+n-1 */
     const selectedLines = this._lines.slice(this.index, this.index+=n);
@@ -87,7 +91,9 @@ export class LineReader{
 
   /** 
    * Reads lines to desired index **exclusive**
-   * @param to - end index exclusive,
+   * @param to - integer, end index exclusive. 
+   * If **to** is negative it reads **to** units back, and updates index to new position.
+   * By default it is `this.length` (end of array).
    * @return array from current position **to** indicated.
    */
   public readTo(to:number=this.length):string[]{
