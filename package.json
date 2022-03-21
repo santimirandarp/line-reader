@@ -3,7 +3,12 @@
   "author": "Santiago Miranda",
   "version": "0.0.11",
   "description": "aims to have similar functionality to python readlines",
-  "keywords": [ "readlines", "linereader", "line-reader", "read by line" ],
+  "keywords": [
+    "readlines",
+    "linereader",
+    "line-reader",
+    "read by line"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,7 +20,11 @@
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
   "types": "./lib/index.d.ts",
-  "files": [ "src", "lib", "lib-esm" ],
+  "files": [
+    "src",
+    "lib",
+    "lib-esm"
+  ],
   "scripts": {
     "check-types": "tsc --noEmit",
     "clean": "rimraf lib lib-esm",
@@ -40,9 +49,5 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.3",
     "typescript": "^4.6.2"
-  },
-  "dependencies": {
-    "ensure-string": "^1.1.0"
   }
 }
-

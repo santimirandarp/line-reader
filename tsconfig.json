@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "lib",
@@ -7,5 +9,6 @@
     "strict": true,
     "target": "es2020"
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["./src/_test/"]
 }

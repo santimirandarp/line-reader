@@ -4,6 +4,5 @@
     "module": "commonjs",
     "declaration": true,
     "declarationMap": true
-  },
-  "exclude": ["./src/**/__tests__"]
+  }
 }

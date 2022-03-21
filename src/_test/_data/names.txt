@@ -1,0 +1,3 @@
+"Linda":"Nuenn"
+"Blanc":"Le mont"
+"Rubiscus":"chlorophile"

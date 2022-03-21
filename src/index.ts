@@ -72,9 +72,6 @@ export class LineReader{
    * **Updates index**.
    */
   public readLines(n: number=1): string[] {
-    if(!Number.isInteger(n) && n > 0){
-      throw new TypeError("argument must be integer and > 0")
-    }
 
     if(n===1) return [this.readLine()];
 
