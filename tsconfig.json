@@ -10,5 +10,5 @@
     "target": "es2020"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/_test/"]
+  "exclude": ["./src/__test__/"]
 }
