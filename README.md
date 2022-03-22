@@ -70,5 +70,5 @@ const bodyFirstLine = lines.readLine();
 [npm-url]: https://www.npmjs.com/package/@santimir/line-reader
 [coverage-url]: https://app.codecov.io/gh/santimirandarp/line-reader/
 [ci-url]: https://www.github.com/santimirandarp/line-reader/Test%20and%20Release
-[docs]: https://santimirandarp.github.io/line-reader/docs
+[docs]: https://santimirandarp.github.io/line-reader
 [license]: https://github.com/santimirandarp/line-reader/LICENSE.md
