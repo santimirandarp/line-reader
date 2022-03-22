@@ -6,11 +6,11 @@ export interface LineReaderOpts {
     index?: number;
 }
 
-/** Tool for reading lines off a file or string
+/** Split-at and read-by lines
  * It creates the lines by a specified splitting pattern or string
  * See [[`LineReaderOpts`]].
- * @param data - The file as a string,  Buffer, ArrayBuffer, etc.
- * It accepts a string array also, in which case it doesn't do any splitting,
+ * @param data - The file as a string or string array, etc.
+ * For string array it doesn't do any further splitting,
  * but it has all the functionality.
  * @param options - Default `{ eol:'\n', index:0 }`
  */

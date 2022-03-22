@@ -35,7 +35,7 @@
     "prettier-write": "prettier --write src",
     "test": "npm run test-only && npm run eslint && npm run prettier && npm run check-types",
     "test-only": "jest --coverage",
-    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
+    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm && npm run docs",
     "tsc-cjs": "tsc --project tsconfig.cjs.json",
     "tsc-esm": "tsc --project tsconfig.esm.json",
     "docs": "typedoc src/index.ts"

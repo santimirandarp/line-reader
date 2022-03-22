@@ -1,6 +1,7 @@
 # line-reader
-[![NPM version][npm-image]][npm-url]
-[![npm download][download-image]][download-url]
+[![version][npm-version]][npm-url]
+[![downloads][npm-downloads]][npm-url]
+[![coverage][coverage]][]
 
 Splits and Reads lines from a string or string array. 
 
@@ -25,7 +26,8 @@ npm i @santimir/line-reader
 import { LineReader } from "@santimir/line-reader";
 
 const myString = "hello\n world\n new string\n here";
-let lines = new LineReader(myString);
+const options = { eol:'\n', index:0 };//eol can also be regex
+let lines = new LineReader(myString, options);
 
 const example = lines.readLine() + lines.skip().readLine(); // "hello new string"
 ```
@@ -38,16 +40,13 @@ import { LineReader } from "@santimir/line-reader";
 
 const myStuff = rfs("./path/to/file").toString("utf8");
 
-const defaultOpts = { eol:/\r?\n/, index:0 };
-let lines = new LineReader(myStuff, defaultOpts );
-
-//useless but to show functionality
-lines.skip(10)//skip first 10 lines, index now 11
-     .record()//stores this index
-     .seek(3)//moves to index 3
-     .rewind()//back to index 11
-     .reset()//index 0
-     .readLine()//returns first line
+let lines = new LineReader(myStuff);
+lines.skip(10) //skip first 10 lines
+     .record() //records current index
+     .seek(3) //moves to index 3
+     .rewind() //back to index 11
+     .reset() //index 0
+     .readLine() //returns first line
 
 let switch = true;
 while(switch){
@@ -59,12 +58,12 @@ while(switch){
 const bodyFirstLine = lines.readLine();
 ```
 
-## [API Documentation][docs]
-## [MIT Licensed][license]
+* [Documentation][docs]
+* [MIT Licensed][license]
 
-[npm-image]: https://img.shields.io/npm/v/@santimir/line-reader.svg
 [npm-url]: https://www.npmjs.com/package/@santimir/line-reader
-[download-image]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
-[download-url]: https://www.npmjs.com/package/@santimir/line-reader
+[npm-version]: https://img.shields.io/npm/v/@santimir/line-reader.svg
+[npm-downloads]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
 [license]: https://github.com/santimirandarp/line-reader/LICENSE.md
-[docs]: https://santimirandarp.github.io/line-reader/
+[docs]: https://santimirandarp.github.io/line-reader/docs
+[coverage]: https://img.shields.io/codecov/c/github/santimirandarp/line-reader?color=green
