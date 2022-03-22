@@ -2,17 +2,15 @@
 # and commits the result (new package.json)
 
 name: Release
-
 on:
   workflow_run:
-    workflows: ["Coverage"]
+    workflows: "Coverage"
     types:
       - completed
 env:
   #used to authenticate
   GH_TOKEN: ${{secrets.GH_TOKEN}}
   NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-
 jobs:
   release:
     runs-on: ubuntu-latest
