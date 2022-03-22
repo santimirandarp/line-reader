@@ -4,7 +4,7 @@
 name: Release
 on:
   workflow_run:
-    workflows: [Coverage]
+    workflows: ["Coverage"]
     types: [completed]
 env:
   #used to authenticate
