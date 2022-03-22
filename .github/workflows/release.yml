@@ -4,9 +4,8 @@
 name: Release
 on:
   workflow_run:
-    workflows: "Coverage"
-    types:
-      - completed
+    workflows: [Coverage]
+    types: [completed]
 env:
   #used to authenticate
   GH_TOKEN: ${{secrets.GH_TOKEN}}
