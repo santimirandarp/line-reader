@@ -1,0 +1,61 @@
+# this job will run on push and pull to main branch
+# 1. it checks out the branch, installs node 16 and npm
+# 2. install project deps
+# 3. runs eslint and prettier
+# 4. Runs the tests and generates coverage folder
+# 5. Uploads folder to codecov and that is then used in the readme.
+# 6. Updates package.json based on commit history. Creates tags too.
+# If you prefer to have step 6 onwards on a separate file, you need this code
+#on:
+#  workflow_run:
+#    workflows: ["Coverage"]
+#    types: [completed]
+#
+#updates package.json version based on commits history 
+# and commits the result (new package.json)
+name: Test and Release
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+env:
+  # used by semantic-release to authenticate at github and write to master
+  # I used the developer tab to generate the token and then paste it to several projs
+  # as a secret
+  GH_TOKEN: ${{secrets.GH_TOKEN}}
+  # used by semantic release to authenticate when publishing to npm
+  # Generate it in NPM (you just need to be registered at npm which is simple)
+  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+jobs:
+  test-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint and Prettier
+        run: npm run eslint && npm run prettier --check
+
+      - name: Run tests and Generate coverage
+        run: npm run test-only
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+
+      - name: setup semantic-release
+        run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
+
+      - name: release
+        run: npx semantic-release
+
