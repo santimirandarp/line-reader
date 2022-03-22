@@ -1,7 +1,8 @@
 # line-reader
-[![version][npm-version]][npm-url]
-[![downloads][npm-downloads]][npm-url]
-[![coverage][coverage]][]
+
+[![version][npm-version-badge]][npm-url]
+[![downloads][npm-downloads-badge]][npm-url]
+[![coverage][coverage-badge]][coverage-url]
 
 Splits and Reads lines from a string or string array. 
 
@@ -61,9 +62,10 @@ const bodyFirstLine = lines.readLine();
 * [Documentation][docs]
 * [MIT Licensed][license]
 
+[npm-version-badge]: https://img.shields.io/npm/v/@santimir/line-reader.svg
+[npm-downloads-badge]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/santimirandarp/line-reader?color=green
 [npm-url]: https://www.npmjs.com/package/@santimir/line-reader
-[npm-version]: https://img.shields.io/npm/v/@santimir/line-reader.svg
-[npm-downloads]: https://img.shields.io/npm/dm/@santimir/line-reader.svg
-[license]: https://github.com/santimirandarp/line-reader/LICENSE.md
+[coverage-url]: https://app.codecov.io/gh/santimirandarp/line-reader/
 [docs]: https://santimirandarp.github.io/line-reader/docs
-[coverage]: https://img.shields.io/codecov/c/github/santimirandarp/line-reader?color=green
+[license]: https://github.com/santimirandarp/line-reader/LICENSE.md
