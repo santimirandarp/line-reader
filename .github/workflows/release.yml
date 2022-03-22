@@ -19,6 +19,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16.x
+    - name: install deps
+      run: npm install
     - name: setup semantic-release
       run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
     - name: release
