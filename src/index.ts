@@ -149,4 +149,3 @@ export class LineReader {
         return this;
     }
 }
-
