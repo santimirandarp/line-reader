@@ -1,0 +1,28 @@
+#updates package.json version based on commits history 
+# and commits the result (new package.json)
+
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Coverage"]
+    types:
+      - completed
+env:
+  #used to authenticate
+  GH_TOKEN: ${{secrets.GH_TOKEN}}
+  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+    - name: setup semantic-release
+      run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog -D
+    - name: release
+      run: npx semantic-release

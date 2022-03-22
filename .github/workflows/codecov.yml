@@ -1,26 +1,27 @@
-name: Running Code Coverage
+name: Coverage
 
-on: [push, pull_request]
+on: 
+  - push 
+    branches: ['main']
+  - pull_request
+    branches: ['main']
 
 jobs:
-  build:
+  tests:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 13.x, 14.x, 15.x]
-
     steps:
+
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
         fetch-depth: 2
 
-    - name: Set up Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16.x'
 
     - name: Install dependencies
       run: npm install
