@@ -38,7 +38,9 @@
     "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm && npm run docs",
     "tsc-cjs": "tsc --project tsconfig.cjs.json",
     "tsc-esm": "tsc --project tsconfig.esm.json",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts",
+    "prepush": "npm run eslint-fix && npm run prettier-write",
+    "push": "git push origin master"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
